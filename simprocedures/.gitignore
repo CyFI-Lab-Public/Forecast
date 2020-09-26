@@ -1,0 +1,6 @@
+.idea
+.DS_Store
+venv
+__pycache__
+simprocedures.egg-info
+.coverage
