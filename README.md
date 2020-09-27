@@ -17,12 +17,12 @@ Python3.7-dev - Will not work without dev. Use: sudo apt install python3.7-dev
 Python3.7-venv Also needed to create virtual environment, use: sudo apt install python3.7-venv
 
 Once this repository is cloned navigate to /Forecast and create/activate the virtual environment then install angr, cle, simprocedures, and dependencies.
-(1) Setup the virtual environment python3.7 -m venv venv
-(2) Activate the virtual environment . ./venv/bin/activate
-(3) Install custom cle pip install -e ../path/to/Forcast/cle
-(4) Install custom angr pip install -e ../path/to/Forcast/angr
-(5) Install simprocedures pip install -e ../path/to/Forcast/simprocedures
-(6) Install forsee and dependencies pip install -e .[dev]
+1) Setup the virtual environment python3.7 -m venv venv
+2) Activate the virtual environment . ./venv/bin/activate
+3) Install custom cle pip install -e ../path/to/Forcast/cle
+4) Install custom angr pip install -e ../path/to/Forcast/angr
+5) Install simprocedures pip install -e ../path/to/Forcast/simprocedures
+6) Install forsee and dependencies pip install -e .[dev]
 
 
 
