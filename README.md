@@ -35,11 +35,11 @@ Navigate to /Forecast and create/activate the virtual environment then install a
 5) You can see shortly if anything was detected within your minidump from the plugin system!
 
 Using Main.dmp located in ../Forcast/sample_dumps/windows_dynamic_loading/Dump we run Forcast on that memory image with: 
-`python run_minidump.py '/home/ubuntu/Desktop/Forcast/sample_dumps/windows_dynamic_loading/Dump`
+`python run_minidump.py '/home/ubuntu/Desktop/Forcast/sample_dumps/windows_dynamic_loading/Dump'`
 
 You can also use on /Forcast the script `run_forsee.py` which takes no arguments but the script needs to be modified with a different path to a memory image every time it is to be used.
 
-Included is also a memory image of the sample greencat, where you can test some simple usage of Forcast.
+Included in `/Forcast/sample_dumps/windows_dynamic_loading` is also a memory image of the sample greencat, where you can test some simple usage of Forcast.
 
 Please make sure to only use 32 bit memory images!
 
