@@ -39,6 +39,10 @@ Using Main.dmp located in ../Forcast/sample_dumps/windows_dynamic_loading/Dump w
 
 You can also use on /Forcast the script `run_forsee.py` which takes no arguments but the script needs to be modified with a different path to a memory image every time it is to be used.
 
+Included is also a memory image of the sample greencat, where you can test some simple usage of Forcast.
+
+Please make sure to only use 32 bit memory images!
+
 ## Plugin System
 A plugin system is implemented to allow plugins to receive callbacks from triggered breakpoints and access the 
 `SimManager` after each step.
