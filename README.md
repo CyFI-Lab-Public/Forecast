@@ -3,7 +3,7 @@ Forecasting Malware Capabilities From Cyber Attack Memory Images
 
 ## Foreword
 Before working with Forcast please make sure to read the 
-[Forcast paper](https://saltaformaggio.ece.gatech.edu/publications/SEC_21.pdf) 
+[Forcast paper](https://cyfi.ece.gatech.edu/publications/SEC_21.pdf) 
 as it will help with understanding and extending the tool it if necessary!
 Keep in mind that this tool is still not perfect, errors are not uncommon and knowing how to work with angr is essential.
 
