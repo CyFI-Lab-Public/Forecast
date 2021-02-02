@@ -3,11 +3,13 @@ Forecasting Malware Capabilities From Cyber Attack Memory Images
 
 ## Foreword
 Before working with Forcast please make sure to read the 
-[Forcast paper]() 
+[Forcast paper](https://saltaformaggio.ece.gatech.edu/publications/SEC_21.pdf) 
 as it will help with understanding and extending the tool it if necessary!
 Keep in mind that this tool is still not perfect, errors are not uncommon and knowing how to work with angr is essential.
 
 With that being said Forecast is an incredible tool to speeds up analysis and can get you some insight into what a sample does without manually reversing it. Included are some sample memory images in (../Forcast/sample_dumps/windows_dynamic_loading/Dump) to illustrate in simple cases what Forsee is capable of.
+
+This code is provided as is. If you extend it in any way/fix any bugs, then please reach out. We will be glad to incorporate any upgrades and give you due credit! :)
 
 ## Requirements
 Forcast has been primarily used on Ubuntu 14.xx and 18.xx machines and has been tested to work on those OS, but results may vary if using something else. Make sure to have all packages up to date and install prerequisites, as well as git. Make sure Pip is also installed and upgraded: python3 -m pip install --upgrade pip
@@ -49,7 +51,4 @@ A plugin system is implemented to allow plugins to receive callbacks from trigge
 
 To create a new plugin, make a new file in the `plugins` folder containing your plugin as a subclass of `PluginBase`. 
 Next, add the new plugin class to `plugin_list` in `PluginManager`.
-
-## Questions
-Please feel free to email us if you have any questions, improvements to Forcast, etc! :)
 
