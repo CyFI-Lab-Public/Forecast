@@ -7,7 +7,7 @@ Some users have had issues installing cle / angr / simprocedures, but have had t
 Forecast cannot currently be installed on Windows. It can, however, be installed on a Debian / Ubuntu virtual machine or Docker image.
 
 ### *When I try to run Forecast on my memory dump, I receive an error that says: “Unable to find a loader backend for sample_dump.dmp” why am I getting this error?*
-If you are getting this error, your memory dump likely is not compatible with Forecast. For instance, memory dumps from WinDbg are currently incompatible with Forecast. For tested methods of generating memory dumps, please refer to the “Collecting a memory image” section of the [step-by-step guide](ForecastDocumentation/Step_by_Step.md).
+If you are getting this error, your memory dump likely is not compatible with Forecast. For instance, memory dumps from WinDbg are currently incompatible with Forecast. For tested methods of generating memory dumps, please refer to the “Collecting a memory image” section of the [step-by-step guide](Step_by_Step.md).
 
 ### *I know my sample malware was performing malicious activities, although Forecast is not detecting them. Why?*
 There are numerous reasons why Forecast may not detect malicious activity. First, the results of Forecast depend on the state of the memory when the dump was taken. It is possible the malicious activity was not in memory when the dump was collected.
