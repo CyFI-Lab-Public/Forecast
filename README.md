@@ -45,6 +45,8 @@ Included in `/Forcast/sample_dumps/windows_dynamic_loading` is also a memory ima
 
 Please make sure to only use 32 bit memory images!
 
+Have issues using Forecast? Check out [the FAQs page](Forecast_Documentation/FAQs.md). If you have something to add, please submit a pull request.
+
 ## Plugin System
 A plugin system is implemented to allow plugins to receive callbacks from triggered breakpoints and access the 
 `SimManager` after each step.
