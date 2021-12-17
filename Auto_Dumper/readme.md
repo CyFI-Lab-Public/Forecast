@@ -2,7 +2,7 @@
 
 # Documentation for Auto_Dumper
 
-Welcome to the Documentation for Auto_Dumper! This is a tool for creating Windows memory dumps at specific memory addresses. This was created by students at the Georgia Institute of Technology to work with the Forecast memory forensics tool that was developed at the GT CyFI lab: https://github.com/CyFI-Lab-Public/Forecast
+Welcome to the Documentation for Auto_Dumper! This is a tool for creating Windows memory dumps at specific memory addresses. This was created by students at the Georgia Institute of Technology to work with the Forecast memory forensics tool that was developed at the GT CyFI lab. The original repository can be found [here](https://github.com/XinyeZhao/Auto_Dumper)
 
 ## 1. Sturcture
 
