@@ -4,7 +4,7 @@ Forecasting Malware Capabilities From Cyber Attack Memory Images
 ## Foreword
 Before working with Forcast please make sure to read the 
 [Forcast paper](https://cyfi.ece.gatech.edu/publications/SEC_21.pdf) 
-as it will help with understanding and extending the tool it if necessary!
+as it will help with understanding and extending the tool if necessary!
 Keep in mind that this tool is still not perfect, errors are not uncommon and knowing how to work with angr is essential.
 
 With that being said Forecast is an incredible tool to speeds up analysis and can get you some insight into what a sample does without manually reversing it. Included are some sample memory images in (../Forcast/sample_dumps/windows_dynamic_loading/Dump) to illustrate in simple cases what Forsee is capable of.
@@ -44,6 +44,8 @@ You can also use on /Forcast the script `run_forsee.py` which takes no arguments
 Included in `/Forcast/sample_dumps/windows_dynamic_loading` is also a memory image of the sample greencat, where you can test some simple usage of Forcast.
 
 Please make sure to only use 32 bit memory images!
+
+Have issues using Forecast? Check out [the FAQs page](Forecast_Documentation/FAQs.md). If you have something to add, please submit a pull request.
 
 ## Plugin System
 A plugin system is implemented to allow plugins to receive callbacks from triggered breakpoints and access the 
