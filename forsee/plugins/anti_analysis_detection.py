@@ -7,7 +7,7 @@ from angr import SimEngineError
 from .plugin_base import PluginBase
 
 log = logging.getLogger(__name__)
-
+from forsee.techniques.procedure_handler.function_detected import FunctionList
 
 class AntiAnalysisDetection(PluginBase):
     """
@@ -45,6 +45,13 @@ class AntiAnalysisDetection(PluginBase):
             except SimEngineError:
                 pass
 
+    def saySomething(self, proc_name: str, state: angr.SimState):
+        if proc_name in self.functions_monitored:
+            log.info(
+                f"Detected possible debugger detection."
+                f" Called function: {state.inspect.simprocedure.display_name}"
+            )
+
     def simprocedure(self, state: angr.SimState):
         """
         Tracks all SimProcedure calls and checks if it is calling a monitored function
@@ -56,11 +63,10 @@ class AntiAnalysisDetection(PluginBase):
             return
         proc_name = proc.display_name
 
-        if proc_name in self.functions_monitored:
-            log.info(
-                f"Detected possible debugger detection."
-                f" Called function: {state.inspect.simprocedure.display_name}"
-            )
+        self.saySomething(proc_name, state)
+        
+        for function, typ in FunctionList.dic.items():
+            self.saySomething(typ, state)
 
     def __repr__(self):
         return "<AntiAnalysisPlugin>"
