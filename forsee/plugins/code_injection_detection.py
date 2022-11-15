@@ -9,7 +9,7 @@ from .extract_string import get_string_a, get_string_w
 from .plugin_base import PluginBase
 
 log = logging.getLogger(__name__)
-
+from forsee.techniques.procedure_handler.function_detected import FunctionList
 
 class CodeInjectionDetection(PluginBase):
     """
