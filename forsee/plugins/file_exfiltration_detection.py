@@ -7,7 +7,7 @@ import archinfo
 from .plugin_base import PluginBase
 
 log = logging.getLogger(__name__)
-
+from forsee.techniques.procedure_handler.function_detected import FunctionList
 
 class FileExfiltrationDetection(PluginBase):
     """
@@ -39,18 +39,8 @@ class FileExfiltrationDetection(PluginBase):
                 f"Detected File Exfiltration with DoC {state.doc.concreteness:.2f}"
             )
 
-    def simprocedure(self, state: angr.SimState):
-        """
-        Tracks all SimProcedure calls and checks if it is calling a monitored function
-        """
-
+    def saySomething(self, proc_name: str, state: angr.SimState):
         proc = state.inspect.simprocedure
-        if proc is None:
-            # Handle syscall SimProcedures
-            log.debug("Reached a syscall SimProcedure")
-            return
-        proc_name = proc.display_name
-
         if proc_name not in self.functions_monitored:
             return
 
@@ -75,3 +65,18 @@ class FileExfiltrationDetection(PluginBase):
             }
             state.globals["file_exfiltration"]["Send"].append(data)
             self._analyze(state)
+
+    def simprocedure(self, state: angr.SimState):
+        """
+        Tracks all SimProcedure calls and checks if it is calling a monitored function
+        """
+
+        proc = state.inspect.simprocedure
+        if proc is None:
+            # Handle syscall SimProcedures
+            log.debug("Reached a syscall SimProcedure")
+            return
+        proc_name = proc.display_name
+        self.saySomething(proc_name, state)
+        for function, typ in FunctionList.dic.items():
+            self.saySomething(typ, state)
