@@ -8,7 +8,7 @@ from .extract_string import get_string_a, get_string_w
 from .plugin_base import PluginBase
 
 log = logging.getLogger(__name__)
-
+from forsee.techniques.procedure_handler.function_detected import FunctionList
 
 class ExternalCnC(PluginBase):
     """
@@ -41,14 +41,9 @@ class ExternalCnC(PluginBase):
                     logstr += '"' + url + '"'
                 log.info(logstr + " with DoC %.2f" % state.doc.concreteness)
 
-    def simprocedure(self, state: angr.SimState):
+    def saySomething(self, proc_name: str, state: angr.SimState):
         proc = state.inspect.simprocedure
-        if proc is None:
-            # Handle syscall SimProcedures
-            log.debug("Reached a syscall SimProcedure")
-            return
         proc_name = proc.display_name
-
         if proc_name not in self.functions_monitored:
             return
 
@@ -89,3 +84,14 @@ class ExternalCnC(PluginBase):
                 state.globals["external_c&c"]["read_file"] = []
             state.globals["external_c&c"]["read_file"].append(handle)
             self._analyze(state)
+
+    def simprocedure(self, state: angr.SimState):
+        proc = state.inspect.simprocedure
+        if proc is None:
+            # Handle syscall SimProcedures
+            log.debug("Reached a syscall SimProcedure")
+            return
+        proc_name = proc.display_name
+        self.saySomething(proc_name, state)
+        for function, typ in FunctionList.dic.items():
+            self.saySomething(typ, state)
