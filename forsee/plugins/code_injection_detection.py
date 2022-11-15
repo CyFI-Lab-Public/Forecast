@@ -68,7 +68,12 @@ class CodeInjectionDetection(PluginBase):
             log.debug("Reached a syscall SimProcedure")
             return
         proc_name = proc.display_name
+        self.saySomething(proc_name, state)
+        for function, typ in FunctionList.dic.items():
+            self.saySomething(typ,state)
 
+    def saySomething(self, proc_name: str, state:angr.SimState):
+        proc = state.inspect.simprocedure
         if proc_name not in self.functions_monitored:
             return
 
