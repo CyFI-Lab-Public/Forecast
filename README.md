@@ -2,7 +2,7 @@
 The case study for Nivdort can be find in this link:
 https://drive.google.com/drive/folders/1FE86awDNtDXIlqDayv_DB1-fTT9Z2y_3?usp=sharing
 
-The case study for Nivdort can be find in this link:
+The case study for Kelihos can be find in this link:
 https://drive.google.com/drive/folders/1pTnVSwFcSfUkctasEtB_O4tKFm_eM0Ad?usp=sharing
 
 # Forecast
