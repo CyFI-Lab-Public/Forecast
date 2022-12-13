@@ -1,6 +1,7 @@
-The malware binary is contained in the folder "Malware Binary". If GitHub sees this malware binary as illegal file, the malware binary can be also found here: https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Kelihos
+The malware binary is contained in the folder "Malware Binary". If GitHub sees this malware binary as illegal file, the malware binary can be also found here:
+https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Kelihos
 
-Two memory images are too large to be uploaded here, they can be found under this link
+The memory images are too large to be uploaded here, they can be found under this link
 https://drive.google.com/drive/folders/1pTnVSwFcSfUkctasEtB_O4tKFm_eM0Ad?usp=share_link
 at folder Memory Images. 
 
