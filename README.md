@@ -1,9 +1,7 @@
 # Case Study
-The case study for Nivdort can be found in the folder Case_Study_Nivdort in this repo, and can also be seen in this link:
-https://drive.google.com/drive/folders/1FE86awDNtDXIlqDayv_DB1-fTT9Z2y_3?usp=sharing
+The case study for Nivdort can be found in the folder Case_Study_Nivdort in this repo
 
-The case study for Kelihos can be found in the folder Case_Study_Kelihos in this repo, and can also be seen in this link:
-https://drive.google.com/drive/folders/1pTnVSwFcSfUkctasEtB_O4tKFm_eM0Ad?usp=sharing
+The case study for Kelihos can be found in the folder Case_Study_Kelihos in this repo.
 
 # Forecast
 Forecasting Malware Capabilities From Cyber Attack Memory Images
