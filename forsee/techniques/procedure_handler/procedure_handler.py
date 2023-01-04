@@ -8,6 +8,7 @@ from angr.procedures.definitions import SimSyscallLibrary
 from archinfo import ArchX86
 from simprocedures import ModelHandler
 from simprocedures import procedures as cyfi_procedures
+from forsee.techniques.procedure_handler.function_detected import FunctionList
 
 from forsee.techniques.procedure_handler.special_sim_procedures import (
     ReturnUnconstrainedLog,
