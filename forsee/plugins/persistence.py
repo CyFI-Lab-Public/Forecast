@@ -7,7 +7,7 @@ import archinfo
 from .plugin_base import PluginBase
 
 log = logging.getLogger(__name__)
-
+from forsee.techniques.procedure_handler.function_detected import FunctionList
 
 class Persistence(PluginBase):
     supported_arch = [arch_info[3] for arch_info in archinfo.arch_id_map]
@@ -25,19 +25,8 @@ class Persistence(PluginBase):
                 log.info(f"Detected Persistence with DoC {state.doc.concreteness:.2f}")
                 return
 
-    def simprocedure(self, state: angr.SimState):
-        # Init globals
-        if "persistence" not in state.globals:
-            state.globals["persistence"] = defaultdict(list)
-
-        # Handle procedure
+    def saySomething(self, proc_name: str, state: angr.SimState):
         proc = state.inspect.simprocedure
-        if proc is None:
-            # Handle syscall SimProcedures
-            log.debug("Reached a syscall SimProcedure")
-            return
-        proc_name = proc.display_name
-
         if proc_name == "RegCreateKeyExA" or proc_name == "RegCreateKeyExW":
             data = {
                 "phkResult": state.memory.load(
@@ -57,6 +46,24 @@ class Persistence(PluginBase):
         elif proc_name == "RegSetValueExA" or proc_name == "RegSetValueExW":
             # Final function in sequence
             self._analyze(state, proc.arg(0))
+
+
+    def simprocedure(self, state: angr.SimState):
+        # Init globals
+        if "persistence" not in state.globals:
+            state.globals["persistence"] = defaultdict(list)
+
+        # Handle procedure
+        proc = state.inspect.simprocedure
+        if proc is None:
+            # Handle syscall SimProcedures
+            log.debug("Reached a syscall SimProcedure")
+            return
+        proc_name = proc.display_name
+        self.saySomething(proc_name, state)
+        for function, typ in FunctionList.dic.items():
+            self.saySomething(typ, state)
+
 
     def __repr__(self):
         return "<PersistenceDetectionPlugin>"

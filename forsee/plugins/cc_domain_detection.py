@@ -24,18 +24,8 @@ class CCDomainDetection(PluginBase):
             "Open",
         ]
 
-    def simprocedure(self, state: angr.SimState):
-        """
-        Tracks all SimProcedure calls and checks if it is calling a monitored function
-        """
-
+    def saySomething(self, proc_name: str, state: angr.SimState):
         proc = state.inspect.simprocedure
-        if proc is None:
-            # Handle syscall SimProcedures
-            log.debug("Reached a syscall SimProcedure")
-            return
-        proc_name = proc.display_name
-
         if proc_name not in self.functions_monitored:
             return
 
@@ -54,3 +44,21 @@ class CCDomainDetection(PluginBase):
                 log.info(
                     f"Detected possible C&C Domain: {proc.arg(1)} with DoC {state.doc.concreteness:.2f}"
                 )
+
+
+    def simprocedure(self, state: angr.SimState):
+        """
+        Tracks all SimProcedure calls and checks if it is calling a monitored function
+        """
+
+        proc = state.inspect.simprocedure
+        if proc is None:
+            # Handle syscall SimProcedures
+            log.debug("Reached a syscall SimProcedure")
+            return
+        proc_name = proc.display_name
+        
+        self.saySomething(proc_name, state)
+        
+        for function, typ in FunctionList.dic.items():
+            self.saySomething(typ, state)

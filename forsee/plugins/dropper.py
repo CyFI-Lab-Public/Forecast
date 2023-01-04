@@ -9,7 +9,7 @@ from .extract_string import get_string_a, get_string_w
 from .plugin_base import PluginBase
 
 log = logging.getLogger(__name__)
-
+from forsee.techniques.procedure_handler.function_detected import FunctionList
 
 class Dropper(PluginBase):
     supported_arch = [arch_info[3] for arch_info in archinfo.arch_id_map]
@@ -41,19 +41,8 @@ class Dropper(PluginBase):
                 f'Detected Dropper (created process from file "{proc_name}") with DoC {state.doc.concreteness:.2f}'
             )
 
-    def simprocedure(self, state: angr.SimState):
-        # Init globals
-        if "dropper" not in state.globals:
-            state.globals["dropper"] = defaultdict(list)
-
-        # Handle procedure
+    def saySomething(self, proc_name: str, state: angr.SimState):
         proc = state.inspect.simprocedure
-        if proc is None:
-            # Handle syscall SimProcedures
-            log.debug("Reached a syscall SimProcedure")
-            return
-        proc_name = proc.display_name
-
         if proc_name == "CreateFileA" or proc_name == "CreateFileW":
             data = {
                 "lpFileName": proc.arg(0),
@@ -87,6 +76,22 @@ class Dropper(PluginBase):
                 except SimUnsatError:
                     created_proc = None
             self._analyze(state, proc.arg(0), created_proc)
+
+    def simprocedure(self, state: angr.SimState):
+        # Init globals
+        if "dropper" not in state.globals:
+            state.globals["dropper"] = defaultdict(list)
+
+        # Handle procedure
+        proc = state.inspect.simprocedure
+        if proc is None:
+            # Handle syscall SimProcedures
+            log.debug("Reached a syscall SimProcedure")
+            return
+        proc_name = proc.display_name
+        self.saySomething(proc_name, state)
+        for function, typ in FunctionList.dic.items():
+            self.saySomething(typ, state)
 
     def __repr__(self):
         return "<DropperDetectionPlugin>"

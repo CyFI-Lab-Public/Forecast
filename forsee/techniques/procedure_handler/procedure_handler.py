@@ -8,6 +8,7 @@ from angr.procedures.definitions import SimSyscallLibrary
 from archinfo import ArchX86
 from simprocedures import ModelHandler
 from simprocedures import procedures as cyfi_procedures
+from forsee.techniques.procedure_handler.function_detected import FunctionList
 
 from forsee.techniques.procedure_handler.special_sim_procedures import (
     ReturnUnconstrainedLog,
@@ -98,6 +99,7 @@ def find_sim_procedure(
     # Search in cyfi's SimProcedures
     for lib, procs in cyfi_procedures.items():
         if name in procs:
+            FunctionList.add(name)
             sim_proc = procs[name](proj)
             log.log(5, f"Found {sim_proc} in {lib} (cyfi)")
             return sim_proc
@@ -109,11 +111,13 @@ def find_sim_procedure(
         if type(sim_lib) == SimSyscallLibrary:
             if sim_lib.has_implementation(name, arch):
                 sim_proc = sim_lib.get(name, arch)
+                FunctionList.add(name)
                 log.log(5, f"Found {sim_proc} in {lib} (angr)")
                 return sim_proc
         else:
             if sim_lib.has_implementation(name):
                 sim_proc = sim_lib.get(name, arch)
+                FunctionList.add(name)
                 log.log(5, f"Found {sim_proc} in {lib} (angr)")
                 return sim_proc
 

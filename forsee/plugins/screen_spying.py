@@ -7,7 +7,7 @@ import archinfo
 from .plugin_base import PluginBase
 
 log = logging.getLogger(__name__)
-
+from forsee.techniques.procedure_handler.function_detected import FunctionList
 
 class ScreenSpying(PluginBase):
     supported_arch = [arch_info[3] for arch_info in archinfo.arch_id_map]
@@ -30,6 +30,20 @@ class ScreenSpying(PluginBase):
                 )
                 return
 
+    def saySomething(self, proc_name: str, state: angr.SimState):
+        proc = state.inspect.simprocedure
+        if proc_name == "GetDC":
+            return_value = state.inspect.simprocedure_result
+            state.globals["screen_spying"]["GetDC"].append(return_value)
+
+        elif proc_name == "GetWindowDC":
+            return_value = state.inspect.simprocedure_result
+            state.globals["screen_spying"]["GetWindowDC"].append(return_value)
+
+        elif proc_name == "CreateCompatibleBitmap":
+            # Final function in sequence
+            self._analyze(state, proc.arg(0))
+
     def simprocedure(self, state: angr.SimState):
         # Init globals
         if "screen_spying" not in state.globals:
@@ -42,15 +56,9 @@ class ScreenSpying(PluginBase):
             log.debug("Reached a syscall SimProcedure")
             return
         proc_name = proc.display_name
-
-        if proc_name == "GetDC":
-            return_value = state.inspect.simprocedure_result
-            state.globals["screen_spying"]["GetDC"].append(return_value)
-
-        elif proc_name == "GetWindowDC":
-            return_value = state.inspect.simprocedure_result
-            state.globals["screen_spying"]["GetWindowDC"].append(return_value)
-
+        self.saySomething(proc_name, state)
+        for function, typ in FunctionList.dic.items():
+            self.saySomething(typ, state)
         elif proc_name == "CreateCompatibleBitmap":
             # Final function in sequence
             self._analyze(state, proc.arg(0))

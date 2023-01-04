@@ -7,7 +7,7 @@ import archinfo
 from .plugin_base import PluginBase
 
 log = logging.getLogger(__name__)
-
+from forsee.techniques.procedure_handler.function_detected import FunctionList
 
 class KeySpying(PluginBase):
     supported_arch = [arch_info[3] for arch_info in archinfo.arch_id_map]
@@ -27,6 +27,18 @@ class KeySpying(PluginBase):
                 log.info(f"Detected Key Spying with DoC {state.doc.concreteness:.2f}")
                 return
 
+    def saySomething(self, proc_name: str, state: angr.SimState):
+        proc = state.inspect.simprocedure
+        if proc_name == "RegisterHotKey":
+            state.globals["key_spying"]["RegisterHotKey"].append(proc.arg(0))
+
+        elif proc_name == "SetWindowsHookExA" or proc_name == "SetWindowsHookExW":
+            state.globals["key_spying"]["SetWindowsHookEx"].append(proc.arg(0))
+
+        elif proc_name == "GetMessageA" or proc_name == "GetMessageW":
+            # Final function in sequence
+            self._analyze(state, proc.arg(1))
+
     def simprocedure(self, state: angr.SimState):
         # Init globals
         if "key_spying" not in state.globals:
@@ -39,16 +51,9 @@ class KeySpying(PluginBase):
             log.debug("Reached a syscall SimProcedure")
             return
         proc_name = proc.display_name
-
-        if proc_name == "RegisterHotKey":
-            state.globals["key_spying"]["RegisterHotKey"].append(proc.arg(0))
-
-        elif proc_name == "SetWindowsHookExA" or proc_name == "SetWindowsHookExW":
-            state.globals["key_spying"]["SetWindowsHookEx"].append(proc.arg(0))
-
-        elif proc_name == "GetMessageA" or proc_name == "GetMessageW":
-            # Final function in sequence
-            self._analyze(state, proc.arg(1))
+        self.saySomething(proc_name, state)
+        for function, typ in FunctionList.dic.items():
+            self.saySomething(typ, state)
 
     def __repr__(self):
         return "<KeySpyingPlugin>"
