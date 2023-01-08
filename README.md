@@ -28,6 +28,21 @@ Navigate to /Forecast and create/activate the virtual environment then install a
 5) Install simprocedures `pip install -e ../path/to/Forcast/simprocedures`
 6) Install forsee and dependencies `pip install -e .[dev]`
 
+Ubuntu 20.04 and above
+    Set-up of Virtual Environment
+    1. sudo apt-get install -y python3-pip
+    2. sudo apt-get install build-essential libssl-dev libffi-dev python-dev
+    3. sudo apt-get install -y python3-venv
+    4. python3 -m venv name_of_virtual_environment
+    5. source activate  path/to/bin/in/virtual/environment
+    
+    Within virtual environment
+    1)Install python module 'six': pip install six
+    2)Set protbuf to 3.20:  pip install protobuf==3.20.*
+    
+    Install angr, cle and dependencies follow the method above
+ 
+
 ## Using Forcast
 1) Get a memory image of a sample using the numerous methods there are.
 2) Navigate in the terminal to your forsee-arm directory, if the virtual environment is not activated proceed to activate it with 
