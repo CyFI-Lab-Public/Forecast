@@ -97,9 +97,12 @@ def find_sim_procedure(
 
     # Search in cyfi's SimProcedures
     for lib, procs in cyfi_procedures.items():
+        #log.info(f"___________________________________________________________________________________")
+        #log.debug(lib)
         if name in procs:
             sim_proc = procs[name](proj)
-            log.log(5, f"Found {sim_proc} in {lib} (cyfi)")
+            #sim_proc = ReturnUnconstrainedLog(proj, display_name=name)
+            log.log(20, f"Found {sim_proc} in {lib} (cyfi)")
             return sim_proc
 
     # Search in angr's SimProcedures
@@ -109,19 +112,19 @@ def find_sim_procedure(
         if type(sim_lib) == SimSyscallLibrary:
             if sim_lib.has_implementation(name, arch):
                 sim_proc = sim_lib.get(name, arch)
-                log.log(5, f"Found {sim_proc} in {lib} (angr)")
+                log.log(20, f"Found {sim_proc} in {lib} (angr)")
                 return sim_proc
         else:
             if sim_lib.has_implementation(name):
                 sim_proc = sim_lib.get(name, arch)
-                log.log(5, f"Found {sim_proc} in {lib} (angr)")
+                log.log(20, f"Found {sim_proc} in {lib} (angr)")
                 return sim_proc
 
     # Search for function model
     if export_manager.model_handler:
         try:
             sim_proc = export_manager.model_handler.create_procedure(name, proj)
-            log.log(5, f"Found {sim_proc} in models")
+            log.log(20, f"Found {sim_proc} in models")
             return sim_proc
         except ValueError:
             pass
@@ -172,16 +175,16 @@ class ProcedureHandler(ExplorationTechnique):
         jump to that address, call the appropriate SimProcedure.
         """
         if self._read_address is None or self._read_value is None:
-            log.log(5, "No reads or writes")
+            log.log(20, "No reads or writes")
             return
         if self._read_address.symbolic or self._read_value.symbolic:
-            log.log(5, "Symbolic read address or value")
+            log.log(20, "Symbolic read address or value")
             return
         # TODO: solver may not have correct constraints here
         read_addr_concrete = state.solver.eval_one(self._read_address)
         read_value_concrete = state.solver.eval_one(self._read_value)
         if read_addr_concrete not in self._main_imports:
-            log.log(5, f"Read address {hex(read_addr_concrete)} not in functions")
+            log.log(20, f"Read address {hex(read_addr_concrete)} not in functions")
             return
 
         flat_successors = stashes[None]
