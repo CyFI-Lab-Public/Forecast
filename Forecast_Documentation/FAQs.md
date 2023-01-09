@@ -19,6 +19,9 @@ It is also possible that Forecast did not find the correct path to explore the m
 ### *Forecast has detected c&c activity in my memory dump, although it does not appear to be the correct domain. Why is it giving me this value instead?*
 Depending of the state of the memory, the domain may have not been initialized yet. If this is the case, the domain reported by Forecast may not be accurate.
 
+### *I am getting a error regarding 'MutableSet'
+If python version used is 3.10 and above, the MutableSet class has been moved to collections.abc. You will have to modify the file orderedset.py located in name_of_virtual_env/lib/python3.10/site-packages/claripy/utils to say 'from collections.abc import MutableSet' instead of 'import collections'
+
 ### *How do I extend existing plugins?*
 You can extend existing plugins by modifying its particular plugin file in the `plugins` directory, as well as adding the necessary information into the correct `simprocedure` file.
 For instance, to add HttpSendRequest to the c&c detection plugin, find the file `foresee/plugins/cc_domain_detection.py` add HttpSendRequest to the list called `functions_monitored` as well as adding a case `if proc_name == "HttpSendRequest"`, in the format of the other cases. From there, you should add a class in the `simprocedures/simprocedures/win32/wininet.py` file, in the same format as the other classes.
